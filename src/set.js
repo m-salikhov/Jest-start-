@@ -1,7 +1,15 @@
-import _ from "lodash";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import * as fs from "node:fs";
 
-const data = { a: [{ b: { c: 3 } }] };
-let dataCopy = { a: [{ b: { c: 3 } }] };
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-_.set(data, "a[0].b.c", true);
-dataCopy.a[0].b.c = true;
+let t = join(__dirname, "..", "__tests__", "fill.test.js");
+const readFile = () =>
+  fs.readFile(t, "utf8", (err, data) => {
+    if (err) throw err;
+    console.log(data);
+  });
+
+console.log(readFile());
