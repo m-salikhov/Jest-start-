@@ -5,6 +5,8 @@ const { Octokit } = octokitRest;
 
 const getUserMainLanguage = async (username, client = new Octokit()) => {
   const { data } = await client.repos.listForUser({ username });
+  console.log('hello');
+
   if (data.length === 0) {
     return null;
   }
@@ -14,7 +16,6 @@ const getUserMainLanguage = async (username, client = new Octokit()) => {
       const count = _.get(acc, `${name}.count`, 0) + 1;
       return { ...acc, [name]: { count, name } };
     }, {});
-  console.log(languages);
   const { name } = _.maxBy(Object.values(languages), (lang) => lang.count);
   return name;
 };

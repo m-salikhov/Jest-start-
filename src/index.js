@@ -1,24 +1,14 @@
-import _ from 'lodash';
-import octokitRest from '@octokit/rest';
+import nock from 'nock';
 
-const { Octokit } = octokitRest;
+test('getPrivateForkNames', async () => {
+  nock(/api\.github\.com/) // это регулярное выражение чтобы не указывать полный адрес
+    // get — для GET-запросов, post — для POST-запросов и так далее
+    .get(/\/orgs\/hexlet\/repos/)
+    .reply(200, [
+      { fork: true, name: 'one' },
+      { fork: false, name: 'two' },
+    ]);
 
-export default (str) => str.split('').reverse().join('');
-
-const getUserMainLanguage = async (username, client = new Octokit()) => {
-  const { data } = await client.repos.listForUser({ username });
-  if (data.length === 0) {
-    return null;
-  }
-  const languages = data
-    .map((repo) => repo.language)
-    .reduce((acc, name) => {
-      const count = _.get(acc, `${name}.count`, 0) + 1;
-      return { ...acc, [name]: { count, name } };
-    }, {});
-  console.log(languages);
-  const { name } = _.maxBy(Object.values(languages), (lang) => lang.count);
-  return name;
-};
-
-getUserMainLanguage('m-salikhov').then((data) => console.log(data));
+  const names = await getPrivateForkNames('hexlet');
+  expect(names).toEqual(['one']);
+});

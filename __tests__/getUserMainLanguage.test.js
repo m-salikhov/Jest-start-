@@ -11,15 +11,15 @@ describe('getUserMainLanguage', () => {
     ];
     const client = new OctokitFake(data);
     const username = 'name';
-    const privateForks = await getUserMainLanguage(username, client);
-    expect(privateForks).toEqual('TypeScript');
+    const mainLanguage = await getUserMainLanguage(username, client);
+    expect(mainLanguage).toEqual('TypeScript');
   });
 
   test('empty array', async () => {
     const data = [];
     const client = new OctokitFake(data);
     const username = 'name';
-    const privateForks = await getUserMainLanguage(username, client);
-    expect(privateForks).toBeNull();
+    const mainLanguage = await getUserMainLanguage(username, client);
+    expect(mainLanguage).toBeNull();
   });
 });
