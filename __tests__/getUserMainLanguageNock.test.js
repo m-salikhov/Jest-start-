@@ -18,9 +18,7 @@ test('normal res', async () => {
 });
 
 test('empty res', async () => {
-  nock(/api\.github\.com/)
-    .get(/\/users\/m-salikhov\/repos/)
-    .reply(200, []);
+  nock('https://api.github.com').get('/users/m-salikhov/repos/').reply(200, []);
 
   const names = await getUserMainLanguage('m-salikhov');
   expect(names).toBeNull();
