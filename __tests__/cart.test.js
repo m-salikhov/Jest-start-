@@ -1,6 +1,7 @@
 import makeCart from '../src/cart.js';
 
 let cart;
+
 let mockItems = [
   { product: { name: 'car', price: 3 }, count: 5 },
   { product: { name: 'house', price: 10 }, count: 2 },

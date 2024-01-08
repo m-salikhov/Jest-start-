@@ -3,8 +3,6 @@ import octokitRest from '@octokit/rest';
 
 const { Octokit } = octokitRest;
 
-export default (str) => str.split('').reverse().join('');
-
 const getUserMainLanguage = async (username, client = new Octokit()) => {
   const { data } = await client.repos.listForUser({ username });
   if (data.length === 0) {
@@ -21,4 +19,6 @@ const getUserMainLanguage = async (username, client = new Octokit()) => {
   return name;
 };
 
-getUserMainLanguage('m-salikhov').then((data) => console.log(data));
+export default getUserMainLanguage;
+
+// getUserMainLanguage('m-salikhov').then((data) => console.log(data));
